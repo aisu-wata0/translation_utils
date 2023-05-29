@@ -44,10 +44,6 @@ def re_code_blocks():
     code_regex = '((' + ')|('.join(code_patterns) + f')\n*?)+'
     return code_regex
 
-for p in code_patterns:
-    print(p)
-
-print(re_code_blocks())
 
 re_code_blocks_c = re.compile(re_code_blocks(), flags=re.DOTALL)
 
