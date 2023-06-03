@@ -44,7 +44,6 @@ def re_code_blocks():
     code_regex = '((' + ')|('.join(code_patterns) + f')\n*?)+'
     return code_regex
 
-
 re_code_blocks_c = re.compile(re_code_blocks(), flags=re.DOTALL)
 
 def filter_fix_nl(text):
@@ -57,6 +56,12 @@ def filter_code_blocks(text, repl=''):
     return filtered_text
 
 if __name__ == "__main__":
+    # Debug patterns
+    for p in code_patterns:
+        print(p)
+
+    print(re_code_blocks())
+
     # Example usage
     input_text = '''Here's an example with exception handling:
 
@@ -74,5 +79,6 @@ finally:
 
 In this example...'''
 
-    filtered_text = filter_code_blocks(input_text)
+
+    filtered_text = filter_code_blocks(input_text, '[... code block]')
     print(filtered_text)
