@@ -78,11 +78,12 @@ def filter_code_comments(text, repl='', comments=[]):
     return filtered_text
 
 re_uri =r'[-a-zA-Z0-9()@:%_\+.~#?&\/=]'
-re_url = r'(?P<protocol>https?:\/\/)?(www\.)?(?P<domain>[-a-zA-Z0-9@:%_\+~#=]{1,256})(?P<TLD>(\.[a-zA-Z0-9()]{1,6})+)\b([-a-zA-Z0-9()@:%_\+.~#?&\/=]*)'
+re_url = r'(?P<protocol>https?:\/\/)?(www\.)?(?P<subdomain>([-a-zA-Z0-9@:%_\+~#=]{1,256}\.)+)?(?P<domain>([-a-zA-Z0-9@:%_\+~#=]{1,256})+)(?P<TLD>(\.[a-zA-Z0-9()]{1,6})+)\b([-a-zA-Z0-9()@:%_\+.~#?&\/=]*)'
 re_url_c = re.compile(re_url, flags=re.DOTALL)
 
 def filter_urls(text, repl='link to {domain}{TLD}'):
-    def replace_url(match):
+    def replace_url(match: re.Match[str]):
+        # print("match", match, match.groups())
         return repl.format(**{k: match.group(k) for k in ['domain', 'TLD', 'protocol']})
     filtered_text = re_url_c.sub(replace_url, text)
     return filtered_text
